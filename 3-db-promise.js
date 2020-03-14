@@ -29,7 +29,7 @@ const CONNECTION_CONFIG = {
   host: 'localhost',
   user: 'hyfuser',
   password: 'hyfpassword',
-  database: 'class17',
+  database: 'userdb',
 };
 
 const CREATE_STUDENTS_TABLE = `
@@ -53,6 +53,10 @@ const CREATE_TEACHERS_TABLE = `
 async function seedDatabase() {
   const connection = mysql.createConnection(CONNECTION_CONFIG);
 
+  // Promise chaining
+  // execQuery() and readFile() functions must return promise
+  // In other words, they do something that is async (DB connection, read file etc.)
+  // To get the results of the query, then() method of the returned promise must be called
   execQuery(connection, CREATE_STUDENTS_TABLE)
     .then(() => execQuery(connection, CREATE_TEACHERS_TABLE))
     .then(() => readFile(__dirname + '/students.json', 'utf8'))

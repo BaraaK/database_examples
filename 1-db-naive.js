@@ -5,7 +5,7 @@ const CONNECTION_CONFIG = {
   host: 'localhost',
   user: 'hyfuser',
   password: 'hyfpassword',
-  database: 'class17',
+  database: 'userdb',
 };
 
 const CREATE_STUDENTS_TABLE = `
@@ -41,6 +41,8 @@ function seedDatabase() {
     }
   });
 
+  // __dirname contains the directory in which this script is present
+  // The following line expects students.json in the same directory
   fs.readFile(__dirname + '/students.json', 'utf8', (error, data) => {
     if (error) {
       throw error;

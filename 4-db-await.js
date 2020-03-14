@@ -2,13 +2,12 @@ const util = require('util');
 const fs = require('fs');
 const mysql = require('mysql');
 
-const readFile = util.promisify(fs.readFile);
 
 const CONNECTION_CONFIG = {
   host: 'localhost',
   user: 'hyfuser',
   password: 'hyfpassword',
-  database: 'class17',
+  database: 'userdb',
 };
 
 const CREATE_STUDENTS_TABLE = `
@@ -29,8 +28,19 @@ const CREATE_TEACHERS_TABLE = `
     gender ENUM('m', 'f')
   );`;
 
+/*
+Promisification : Conversion of a function that accepts a callback
+                    into a function that returns a promise
+*/
+
 async function seedDatabase() {
   const connection = mysql.createConnection(CONNECTION_CONFIG);
+  const readFile = util.promisify(fs.readFile);
+  // Invoking bind() on any function returns a copy of the function where ‘this’ is set to the first argument passed into bind.
+  // Here bind is invoked in query() function.
+  // Inside query function "this" is used as the connection object.
+  // Check the code https://github.com/mysqljs/mysql/blob/master/lib/Connection.js#L182
+  // apply() or call() is not used because these method not only assign "this" but also run the function immediately
   const execQuery = util.promisify(connection.query.bind(connection));
 
   try {

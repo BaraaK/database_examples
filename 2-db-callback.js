@@ -5,7 +5,7 @@ const CONNECTION_CONFIG = {
   host: 'localhost',
   user: 'hyfuser',
   password: 'hyfpassword',
-  database: 'class17',
+  database: 'userdb',
 };
 
 const CREATE_STUDENTS_TABLE = `
@@ -35,6 +35,7 @@ function exitWithError(connection, err) {
 function seedDatabase() {
   const connection = mysql.createConnection(CONNECTION_CONFIG);
 
+  // Callback hell
   connection.query(CREATE_STUDENTS_TABLE, err => {
     if (err) {
       exitWithError(connection, err);
